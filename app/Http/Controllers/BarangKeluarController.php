@@ -11,8 +11,8 @@ class BarangKeluarController extends Controller
     public function index()
     {
         $barangKeluar = BarangKeluar::with('barang')
-                        ->latest()
-                        ->get();
+                            ->latest()
+                            ->get();
 
         return view('barang_keluar.index', compact('barangKeluar'));
     }
@@ -27,38 +27,91 @@ class BarangKeluarController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'barang_id'=>'required|exists:barangs,id',
-            'tanggal'=>'required|date',
-            'jumlah'=>'required|integer|min:1',
-            'digunakan_oleh'=>'required',
-            'keperluan'=>'required',
+            'barang_id' => 'required|exists:barangs,id',
+            'tanggal' => 'required|date',
+            'jumlah' => 'required|integer|min:1',
+            'digunakan_oleh' => 'required',
+            'keperluan' => 'required',
         ]);
 
-        $barang = Barang::find($request->barang_id);
+        $barang = Barang::findOrFail($request->barang_id);
 
-        if($barang->stok < $request->jumlah){
-
+        if ($request->jumlah > $barang->stok) {
             return back()
-                    ->with('error','Stok barang tidak mencukupi.');
-
+                ->withInput()
+                ->withErrors([
+                    'jumlah' => 'Stok tidak mencukupi.'
+                ]);
         }
 
         BarangKeluar::create([
-
-            'barang_id'=>$request->barang_id,
-            'tanggal'=>$request->tanggal,
-            'jumlah'=>$request->jumlah,
-            'digunakan_oleh'=>$request->digunakan_oleh,
-            'keperluan'=>$request->keperluan,
-
+            'barang_id' => $request->barang_id,
+            'tanggal' => $request->tanggal,
+            'jumlah' => $request->jumlah,
+            'digunakan_oleh' => $request->digunakan_oleh,
+            'keperluan' => $request->keperluan,
         ]);
 
         $barang->stok -= $request->jumlah;
-
         $barang->save();
 
         return redirect()
-                ->route('barang-keluar.index')
-                ->with('success','Barang keluar berhasil ditambahkan.');
+            ->route('barang-keluar.index')
+            ->with('success', 'Barang keluar berhasil ditambahkan.');
+    }
+
+    public function edit(BarangKeluar $barangKeluar)
+    {
+        $barang = Barang::all();
+
+        return view('barang_keluar.edit', compact('barangKeluar', 'barang'));
+    }
+
+    public function update(Request $request, BarangKeluar $barangKeluar)
+    {
+        $request->validate([
+            'barang_id' => 'required|exists:barangs,id',
+            'tanggal' => 'required|date',
+            'jumlah' => 'required|integer|min:1',
+            'digunakan_oleh' => 'required',
+            'keperluan' => 'required',
+        ]);
+
+        $barangLama = Barang::find($barangKeluar->barang_id);
+        $barangLama->stok += $barangKeluar->jumlah;
+        $barangLama->save();
+
+        $barangBaru = Barang::find($request->barang_id);
+
+        if ($request->jumlah > $barangBaru->stok) {
+            return back()
+                ->withInput()
+                ->withErrors([
+                    'jumlah' => 'Stok tidak mencukupi.'
+                ]);
+        }
+
+        $barangBaru->stok -= $request->jumlah;
+        $barangBaru->save();
+
+        $barangKeluar->update($request->all());
+
+        return redirect()
+            ->route('barang-keluar.index')
+            ->with('success', 'Data berhasil diubah.');
+    }
+
+    public function destroy(BarangKeluar $barangKeluar)
+    {
+        $barang = Barang::find($barangKeluar->barang_id);
+
+        $barang->stok += $barangKeluar->jumlah;
+        $barang->save();
+
+        $barangKeluar->delete();
+
+        return redirect()
+            ->route('barang-keluar.index')
+            ->with('success', 'Data berhasil dihapus.');
     }
 }
