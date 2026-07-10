@@ -32,7 +32,7 @@ Dashboard SiStock TVRI Sumsel
 
 <p class="text-4xl font-bold">
 
-{{ $totalMasuk }}
+{{$totalMasuk}}
 
 </p>
 
@@ -97,40 +97,6 @@ Barang Stok Menipis
 {{ $barang->stok }}
 
 </td>
-
-</tr>
-
-@endforeach
-
-</table>
-
-</div>
-
-<div class="bg-white shadow rounded p-4">
-
-<h3 class="font-bold text-lg mb-3">
-
-Barang Terbaru
-
-</h3>
-
-<table class="w-full">
-
-<tr>
-
-<th>Nama</th>
-
-<th>Stok</th>
-
-</tr>
-
-@foreach($barangTerbaru as $barang)
-
-<tr>
-
-<td>{{ $barang->nama_barang }}</td>
-
-<td>{{ $barang->stok }}</td>
 
 </tr>
 

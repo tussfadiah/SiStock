@@ -11,7 +11,7 @@ class BarangKeluar extends Model
         'tanggal',
         'jumlah',
         'digunakan_oleh',
-        'keperluan'
+        'keperluan',
     ];
 
     public function barang()

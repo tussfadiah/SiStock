@@ -12,23 +12,20 @@ class DashboardController extends Controller
     {
         $totalBarang = Barang::count();
 
-        $totalMasuk = BarangMasuk::sum('jumlah');
+        $totalMasuk = BarangMasuk::count();
 
-        $totalKeluar = BarangKeluar::sum('jumlah');
+        $totalKeluar = BarangKeluar::count();
 
         $totalStok = Barang::sum('stok');
 
         $stokMenipis = Barang::where('stok','<=',5)->get();
-
-        $barangTerbaru = Barang::latest()->take(5)->get();
 
         return view('dashboard', compact(
             'totalBarang',
             'totalMasuk',
             'totalKeluar',
             'totalStok',
-            'stokMenipis',
-            'barangTerbaru'
+            'stokMenipis'
         ));
     }
 }
