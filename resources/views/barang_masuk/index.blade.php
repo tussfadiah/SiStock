@@ -30,20 +30,16 @@ Tambah Barang Masuk
 </a>
 
 <table class="w-full mt-5 border">
-
-<thead class="bg-gray-200">
+<thead>
 
 <tr>
 
-<th class="border p-2">Tanggal</th>
-
-<th class="border p-2">Barang</th>
-
-<th class="border p-2">Jumlah</th>
-
-<th class="border p-2">Supplier</th>
-
-<th class="border p-2">Keterangan</th>
+<th>Tanggal</th>
+<th>Barang</th>
+<th>Jumlah</th>
+<th>Supplier</th>
+<th>Keterangan</th>
+<th>Aksi</th>
 
 </tr>
 
@@ -55,33 +51,43 @@ Tambah Barang Masuk
 
 <tr>
 
-<td class="border p-2">
+<td>{{ $bm->tanggal }}</td>
 
-{{ $bm->tanggal }}
+<td>{{ $bm->barang->nama_barang }}</td>
 
-</td>
+<td>{{ $bm->jumlah }}</td>
 
-<td class="border p-2">
+<td>{{ $bm->supplier }}</td>
 
-{{ $bm->barang->nama_barang }}
+<td>{{ $bm->keterangan }}</td>
 
-</td>
+<td>
 
-<td class="border p-2">
+<a href="{{ route('barang-masuk.edit',$bm->id) }}"
+class="text-blue-600">
 
-{{ $bm->jumlah }}
+Edit
 
-</td>
+</a>
 
-<td class="border p-2">
+|
 
-{{ $bm->supplier }}
+<form
+action="{{ route('barang-masuk.destroy',$bm->id) }}"
+method="POST"
+style="display:inline">
 
-</td>
+@csrf
+@method('DELETE')
 
-<td class="border p-2">
+<button
+onclick="return confirm('Hapus data?')">
 
-{{ $bm->keterangan }}
+Hapus
+
+</button>
+
+</form>
 
 </td>
 

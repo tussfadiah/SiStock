@@ -9,40 +9,50 @@ use Illuminate\Http\Request;
 class BarangMasukController extends Controller
 {
     public function index()
+    {
+        $barangMasuk = BarangMasuk::with('barang')
+                        ->latest()
+                        ->get();
+
+        return view('barang_masuk.index', compact('barangMasuk'));
+    }
+
+    public function create()
+    {
+        $barang = Barang::all();
+
+        return view('barang_masuk.create', compact('barang'));
+    }
+
+ public function store(Request $request)
 {
-    $barangMasuk = BarangMasuk::with('barang')
-                    ->latest()
-                    ->get();
+dd($request->all());
 
-    return view('barang_masuk.index', compact('barangMasuk'));
-}
-
-public function create()
-{
-    $barang = Barang::all();
-
-    return view('barang_masuk.create', compact('barang'));
-}
-
-    public function store(Request $request)
-{
     $request->validate([
-        'barang_id' => 'required',
-        'tanggal' => 'required',
-        'jumlah' => 'required|integer|min:1',
-        'keterangan' => 'nullable',
+        'barang_id'=>'required|exists:barangs,id',
+        'tanggal'=>'required|date',
+        'jumlah'=>'required|integer|min:1',
+        'supplier'=>'nullable|string|max:255',
+        'keterangan'=>'nullable|string',
     ]);
-
-    BarangMasuk::create($request->all());
-
-    $barang = Barang::find($request->barang_id);
-
-    $barang->stok += $request->jumlah;
-
-    $barang->save();
-
-    return redirect()
-            ->route('barang-masuk.index')
-            ->with('success', 'Barang masuk berhasil disimpan.');
 }
+    public function show(BarangMasuk $barangMasuk)
+    {
+        //
+    }
+
+    public function edit(BarangMasuk $barangMasuk)
+    {
+        //
+    }
+
+    public function update(Request $request, BarangMasuk $barangMasuk)
+    {
+        //
+    }
+
+    public function destroy(BarangMasuk $barangMasuk)
+    {
+        //
+    }
 }

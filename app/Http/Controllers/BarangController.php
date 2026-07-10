@@ -7,9 +7,19 @@ use Illuminate\Http\Request;
 
 class BarangController extends Controller
 {
-    public function index()
+ public function index(Request $request)
 {
-    $barang = Barang::all();
+    $keyword = $request->keyword;
+
+    $barang = Barang::when($keyword, function ($query) use ($keyword) {
+
+        $query->where('kode_barang', 'like', "%$keyword%")
+              ->orWhere('nama_barang', 'like', "%$keyword%")
+              ->orWhere('kategori', 'like', "%$keyword%")
+              ->orWhere('merk', 'like', "%$keyword%")
+              ->orWhere('lokasi', 'like', "%$keyword%");
+
+    })->latest()->paginate(10);
 
     return view('barang.index', compact('barang'));
 }
@@ -19,33 +29,33 @@ class BarangController extends Controller
         return view('barang.create');
     }
 
- public function store(Request $request)
+public function store(Request $request)
 {
     $request->validate([
-        'barang_id' => 'required|exists:barangs,id',
-        'tanggal' => 'required|date',
-        'jumlah' => 'required|integer|min:1',
-        'supplier' => 'nullable|string|max:255',
-        'keterangan' => 'nullable|string',
+        'kode_barang' => 'required|unique:barangs,kode_barang',
+        'nama_barang' => 'required',
+        'kategori'    => 'required',
+        'merk'        => 'required',
+        'stok'        => 'required|integer|min:0',
+        'satuan'      => 'required',
+        'lokasi'      => 'required',
+        'keterangan'  => 'nullable',
     ]);
 
-    // Simpan transaksi barang masuk
-    BarangMasuk::create([
-        'barang_id' => $request->barang_id,
-        'tanggal' => $request->tanggal,
-        'jumlah' => $request->jumlah,
-        'supplier' => $request->supplier,
-        'keterangan' => $request->keterangan,
+    Barang::create([
+        'kode_barang' => $request->kode_barang,
+        'nama_barang' => $request->nama_barang,
+        'kategori'    => $request->kategori,
+        'merk'        => $request->merk,
+        'stok'        => $request->stok,
+        'satuan'      => $request->satuan,
+        'lokasi'      => $request->lokasi,
+        'keterangan'  => $request->keterangan,
     ]);
-
-    // Tambahkan stok barang
-    $barang = Barang::find($request->barang_id);
-    $barang->stok += $request->jumlah;
-    $barang->save();
 
     return redirect()
-        ->route('barang-masuk.index')
-        ->with('success', 'Barang masuk berhasil ditambahkan.');
+        ->route('barang.index')
+        ->with('success', 'Barang berhasil ditambahkan.');
 }
 
     public function edit(Barang $barang)

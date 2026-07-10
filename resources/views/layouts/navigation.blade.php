@@ -13,17 +13,19 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('barang.index')" :active="request()->routeIs('barang.*')">
-    Data Barang
+Dashboard
 </x-nav-link>
-<x-nav-link
-:href="route('barang-masuk.index')"
-:active="request()->routeIs('barang-masuk.*')">
 
+<x-nav-link :href="route('barang.index')" :active="request()->routeIs('barang.*')">
+Data Barang
+</x-nav-link>
+
+<x-nav-link :href="route('barang-masuk.index')" :active="request()->routeIs('barang-masuk.*')">
 Barang Masuk
+</x-nav-link>
 
+<x-nav-link :href="route('barang-keluar.index')" :active="request()->routeIs('barang-keluar.*')">
+Barang Keluar
 </x-nav-link>
                 </div>
             </div>

@@ -1,45 +1,147 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-2xl text-gray-800">
-            Dashboard SiStock TVRI Sumsel
-        </h2>
-    </x-slot>
 
-    <div class="py-6">
-        <div class="max-w-7xl mx-auto px-6">
+<x-slot name="header">
 
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+<h2 class="text-2xl font-bold">
 
-                <div class="bg-blue-500 text-white rounded-lg p-6 shadow">
-                    <h3 class="text-lg font-bold">Total Barang</h3>
-                    <p class="text-4xl font-bold mt-3">
-                        {{ \App\Models\Barang::count() }}
-                    </p>
-                </div>
+Dashboard SiStock TVRI Sumsel
 
-                <div class="bg-green-500 text-white rounded-lg p-6 shadow">
-                    <h3 class="text-lg font-bold">Barang Masuk</h3>
-                    <p class="text-4xl font-bold mt-3">
-                        {{ \App\Models\BarangMasuk::count() }}
-                    </p>
-                </div>
+</h2>
 
-                <div class="bg-red-500 text-white rounded-lg p-6 shadow">
-                    <h3 class="text-lg font-bold">Barang Keluar</h3>
-                    <p class="text-4xl font-bold mt-3">
-                        {{ \App\Models\BarangKeluar::count() }}
-                    </p>
-                </div>
+</x-slot>
 
-                <div class="bg-yellow-500 text-white rounded-lg p-6 shadow">
-                    <h3 class="text-lg font-bold">Stok Menipis</h3>
-                    <p class="text-4xl font-bold mt-3">
-                        {{ \App\Models\Barang::where('stok','<=',5)->count() }}
-                    </p>
-                </div>
+<div class="p-6">
 
-            </div>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-5">
 
-        </div>
-    </div>
+<div class="bg-blue-500 text-white rounded-lg shadow p-5">
+
+<h3>Total Barang</h3>
+
+<p class="text-4xl font-bold">
+
+{{ $totalBarang }}
+
+</p>
+
+</div>
+
+<div class="bg-green-500 text-white rounded-lg shadow p-5">
+
+<h3>Barang Masuk</h3>
+
+<p class="text-4xl font-bold">
+
+{{ $totalMasuk }}
+
+</p>
+
+</div>
+
+<div class="bg-red-500 text-white rounded-lg shadow p-5">
+
+<h3>Barang Keluar</h3>
+
+<p class="text-4xl font-bold">
+
+{{ $totalKeluar }}
+
+</p>
+
+</div>
+
+<div class="bg-yellow-500 text-white rounded-lg shadow p-5">
+
+<h3>Total Stok</h3>
+
+<p class="text-4xl font-bold">
+
+{{ $totalStok }}
+
+</p>
+
+</div>
+
+</div>
+
+<br>
+
+<div class="grid grid-cols-2 gap-6">
+
+<div class="bg-white shadow rounded p-4">
+
+<h3 class="font-bold text-lg mb-3">
+
+Barang Stok Menipis
+
+</h3>
+
+<table class="w-full">
+
+<tr>
+
+<th>Nama</th>
+
+<th>Stok</th>
+
+</tr>
+
+@foreach($stokMenipis as $barang)
+
+<tr>
+
+<td>{{ $barang->nama_barang }}</td>
+
+<td class="text-red-600 font-bold">
+
+{{ $barang->stok }}
+
+</td>
+
+</tr>
+
+@endforeach
+
+</table>
+
+</div>
+
+<div class="bg-white shadow rounded p-4">
+
+<h3 class="font-bold text-lg mb-3">
+
+Barang Terbaru
+
+</h3>
+
+<table class="w-full">
+
+<tr>
+
+<th>Nama</th>
+
+<th>Stok</th>
+
+</tr>
+
+@foreach($barangTerbaru as $barang)
+
+<tr>
+
+<td>{{ $barang->nama_barang }}</td>
+
+<td>{{ $barang->stok }}</td>
+
+</tr>
+
+@endforeach
+
+</table>
+
+</div>
+
+</div>
+
+</div>
+
 </x-app-layout>

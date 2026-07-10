@@ -7,8 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 class BarangKeluar extends Model
 {
     protected $fillable = [
-    'barang_id',
-    'jumlah',
-    'tanggal'
-];
+        'barang_id',
+        'tanggal',
+        'jumlah',
+        'digunakan_oleh',
+        'keperluan'
+    ];
+
+    public function barang()
+    {
+        return $this->belongsTo(Barang::class);
+    }
 }
