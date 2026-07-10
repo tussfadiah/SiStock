@@ -23,6 +23,26 @@
         Tambah Barang
 
     </a>
+    
+<br><br>
+    <form method="GET"
+action="{{ route('barang.index') }}">
+
+<input
+type="text"
+name="keyword"
+value="{{ request('keyword') }}"
+placeholder="Cari barang..."
+class="border rounded px-3 py-2">
+
+<button
+class="bg-green-600 text-white px-3 py-2 rounded">
+
+Cari
+
+</button>
+
+</form>
 
     <table class="w-full mt-5 border">
 
@@ -97,6 +117,12 @@
         </tbody>
 
     </table>
+
+    <div class="mt-5">
+
+{{ $barang->links() }}
+
+</div>
 
 </div>
 

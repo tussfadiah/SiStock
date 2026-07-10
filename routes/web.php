@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\BarangMasukController;
+use App\Http\Controllers\BarangKeluarController;
+use App\Http\Controllers\DashboardController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -11,13 +13,14 @@ Route::get('/', function () {
 
 Route::middleware('auth')->group(function () {
 
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
-
+   Route::get('/dashboard',[DashboardController::class,'index'])
+    ->middleware('auth')
+    ->name('dashboard');
+    
     Route::resource('barang', BarangController::class);
 
     Route::resource('barang-masuk', BarangMasukController::class);
+    Route::resource('barang-keluar', BarangKeluarController::class);
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

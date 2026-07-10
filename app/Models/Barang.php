@@ -17,10 +17,10 @@ class Barang extends Model
         'keterangan'
     ];
 
-      public function barangMasuks()
-    {
-        return $this->hasMany(BarangMasuk::class);
-    }
+     public function barangMasuks()
+{
+    return $this->hasMany(BarangMasuk::class);
+}
 
     public function barangKeluars()
     {
