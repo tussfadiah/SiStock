@@ -1,10 +1,5 @@
 <x-app-layout>
 
-<x-slot name="header">
-    <h2 class="text-xl font-bold">
-        Barang Keluar
-    </h2>
-</x-slot>
 
 <div class="p-6">
 
