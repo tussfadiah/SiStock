@@ -14,7 +14,7 @@
 
         <li>
             <a href="{{ route('dashboard') }}"
-               class="block p-3 rounded hover:bg-gray-700">
+               class="block p-3 rounded hover:bg-gray-300">
                 Dashboard
             </a>
         </li>
@@ -25,7 +25,7 @@
 
         <li>
             <a href="{{ route('barang.index') }}"
-               class="block p-3 rounded hover:bg-gray-700">
+               class="block p-3 rounded hover:bg-gray-300">
                 Data Barang
             </a>
         </li>
@@ -36,14 +36,14 @@
 
         <li>
             <a href="{{ route('barang-masuk.index') }}"
-               class="block p-3 rounded hover:bg-gray-700">
+               class="block p-3 rounded hover:bg-gray-300">
                 Barang Masuk
             </a>
         </li>
 
         <li>
             <a href="{{ route('barang-keluar.index') }}"
-               class="block p-3 rounded hover:bg-gray-700">
+               class="block p-3 rounded hover:bg-gray-300">
                 Barang Keluar
             </a>
         </li>
@@ -54,7 +54,7 @@
 
         <li>
             <a href="{{ route('profile.edit') }}"
-               class="block p-3 rounded hover:bg-gray-700">
+               class="block p-3 rounded hover:bg-gray-300">
                 Profile
             </a>
         </li>

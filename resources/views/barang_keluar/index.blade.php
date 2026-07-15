@@ -1,134 +1,171 @@
 <x-app-layout>
 
-
 <div class="p-6">
 
-@if(session('success'))
+    @if(session('success'))
+        <div class="mb-4 rounded-lg border border-green-400 bg-green-100 p-3 text-green-700">
+            {{ session('success') }}
+        </div>
+    @endif
 
-<div class="bg-green-100 border border-green-400 text-green-700 p-3 rounded mb-4">
+    <!-- Header -->
+    <div class="bg-white rounded-lg shadow-md p-5 mb-6">
 
-{{ session('success') }}
+        <div class="flex justify-between items-center mb-4">
 
-</div>
+            <h2 class="text-xl font-bold text-gray-700">
+                Data Barang Keluar
+            </h2>
+        </div>
 
-@endif
+        <form method="GET" action="{{ route('barang-keluar.index') }}">
 
-<a href="{{ route('barang-keluar.create') }}"
-class="bg-red-600 text-white px-4 py-2 rounded">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
 
-Tambah Barang Keluar
+                <div class="md:col-span-3">
 
-</a>
+                    <input
+                        type="text"
+                        name="keyword"
+                        value="{{ request('keyword') }}"
+                        placeholder="Cari kode, nama barang, pengguna..."
+                        class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500">
 
-<table class="w-full mt-5 border">
+                </div>
 
-<thead class="bg-gray-100">
+                <div class="flex gap-2">
 
-<tr>
+                    <button
+                        type="submit"
+                        class="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-lg">
 
-<th class="border p-2">Tanggal</th>
+                        Cari
 
-<th class="border p-2">Barang</th>
+                    </button>
 
-<th class="border p-2">Jumlah</th>
+                    <a href="{{ route('barang-keluar.index') }}"
+                        class="bg-gray-500 hover:bg-gray-600 text-white px-5 py-2 rounded-lg">
 
-<th class="border p-2">Digunakan Oleh</th>
+                        Reset
 
-<th class="border p-2">Keperluan</th>
+                    </a>
 
-<th class="border p-2">Aksi</th>
+                </div>
 
-</tr>
+            </div>
 
-</thead>
+        </form>
 
-<tbody>
+    </div>
 
-@forelse($barangKeluar as $bk)
+    <!-- Table -->
 
-<tr>
+    <div class="bg-white rounded-lg shadow-md overflow-x-auto">
 
-<td class="border p-2">
+        <table class="min-w-full">
 
-{{ $bk->tanggal }}
+            <thead class="bg-blue-900 text-white">
 
-</td>
+                <tr class="text-center">
 
-<td class="border p-2">
+                    <th class="border p-3">No</th>
+                    <th class="border p-3">Tanggal</th>
+                    <th class="border p-3">Kode Barang</th>
+                    <th class="border p-3">Nama Barang</th>
+                    <th class="border p-3">Digunakan Oleh</th>
+                    <th class="border p-3">Keperluan</th>
+                    <th class="border p-3">Aksi</th>
 
-{{ $bk->barang->nama_barang }}
+                </tr>
 
-</td>
+            </thead>
 
-<td class="border p-2">
+            <tbody>
 
-{{ $bk->jumlah }}
+                @forelse($barangKeluar as $bk)
 
-</td>
+                <tr class="hover:bg-gray-50 text-center">
 
-<td class="border p-2">
+                    <td class="border p-3">
+                        {{ $loop->iteration }}
+                    </td>
 
-{{ $bk->digunakan_oleh }}
+                    <td class="border p-3">
+                        {{ \Carbon\Carbon::parse($bk->tanggal)->format('d-m-Y') }}
+                    </td>
 
-</td>
+                    <td class="border p-3">
+                        {{ $bk->barang->kode_barang }}
+                    </td>
 
-<td class="border p-2">
+                    <td class="border p-3">
+                        {{ $bk->barang->nama_barang }}
+                    </td>
 
-{{ $bk->keperluan }}
+                    <td class="border p-3">
+                        {{ $bk->digunakan_oleh }}
+                    </td>
 
-</td>
+                    <td class="border p-3">
+                        {{ $bk->keperluan }}
+                    </td>
 
-<td class="border p-2">
+                    <td class="border p-3">
 
-<a
-href="{{ route('barang-keluar.edit',$bk->id) }}"
-class="text-blue-600">
+                        <div class="flex justify-center gap-2">
 
-Edit
+                            <a href="{{ route('barang-keluar.edit',$bk->id) }}"
+                                class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-lg text-sm">
 
-</a>
+                                <i class="fas fa-pen"></i>
+                                Edit
 
-|
+                            </a>
 
-<form
-action="{{ route('barang-keluar.destroy',$bk->id) }}"
-method="POST"
-style="display:inline">
+                            <form
+                                action="{{ route('barang-keluar.destroy',$bk->id) }}"
+                                method="POST"
+                                onsubmit="return confirm('Yakin ingin menghapus data ini?')">
 
-@csrf
-@method('DELETE')
+                                @csrf
+                                @method('DELETE')
 
-<button
-onclick="return confirm('Hapus data?')">
+                                <button
+                                    type="submit"
+                                    class="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-lg text-sm">
 
-Hapus
+                                    <i class="fas fa-trash"></i>
+                                    Hapus
 
-</button>
+                                </button>
 
-</form>
+                            </form>
 
-</td>
+                        </div>
 
-</tr>
+                    </td>
 
-@empty
+                </tr>
 
-<tr>
+                @empty
 
-<td colspan="6"
-class="text-center p-4">
+                <tr>
 
-Belum ada data.
+                    <td colspan="7" class="text-center p-6 text-gray-500">
 
-</td>
+                        Belum ada data barang keluar.
 
-</tr>
+                    </td>
 
-@endforelse
+                </tr>
 
-</tbody>
+                @endforelse
 
-</table>
+            </tbody>
+
+        </table>
+
+    </div>
 
 </div>
 

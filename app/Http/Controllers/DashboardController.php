@@ -2,30 +2,35 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Barang;
-use App\Models\BarangMasuk;
-use App\Models\BarangKeluar;
+   use App\Models\Barang;
 
 class DashboardController extends Controller
 {
-    public function index()
-    {
-        $totalBarang = Barang::count();
 
-        $totalMasuk = BarangMasuk::count();
+public function index()
+{
+    $totalBarang = Barang::count();
 
-        $totalKeluar = BarangKeluar::count();
+    $totalKategori = Barang::distinct('kategori')->count('kategori');
 
-        $totalStok = Barang::sum('stok');
+    $totalLokasi = Barang::distinct('lokasi')->count('lokasi');
 
-        $stokMenipis = Barang::where('stok','<=',5)->get();
+    $totalMerk = Barang::distinct('merk')->count('merk');
 
-        return view('dashboard', compact(
-            'totalBarang',
-            'totalMasuk',
-            'totalKeluar',
-            'totalStok',
-            'stokMenipis'
-        ));
-    }
+    $kategori = Barang::selectRaw('kategori, COUNT(*) as total')
+        ->groupBy('kategori')
+        ->orderBy('total', 'DESC')
+        ->get();
+
+    $barangTerbaru = Barang::latest()->take(10)->get();
+
+    return view('dashboard', compact(
+        'totalBarang',
+        'totalKategori',
+        'totalLokasi',
+        'totalMerk',
+        'kategori',
+        'barangTerbaru'
+    ));
+}
 }

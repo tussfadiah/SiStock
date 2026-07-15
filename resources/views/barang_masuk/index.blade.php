@@ -1,18 +1,14 @@
 <x-app-layout>
 
-
 <div class="p-6">
 
-@if(session('success'))
+    @if(session('success'))
+        <div class="mb-6 rounded-lg border border-green-400 bg-green-100 p-3 text-green-700">
+            {{ session('success') }}
+        </div>
+    @endif
 
-<div class="bg-green-100 border border-green-400 text-green-700 p-3 rounded mb-4">
-
-{{ session('success') }}
-
-</div>
-
-@endif
-    <!-- Card Filter -->
+    <!-- Header -->
     <div class="bg-white rounded-lg shadow-md p-5 mb-6">
 
         <div class="flex justify-between items-center mb-4">
@@ -21,11 +17,6 @@
                 Data Barang Masuk
             </h2>
 
-            <a href="{{ route('barang-masuk.create') }}"
-               class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
-                + Tambah Barang Masuk
-            </a>
-
         </div>
 
         <form method="GET" action="{{ route('barang-masuk.index') }}">
@@ -33,31 +24,25 @@
             <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
 
                 <div class="md:col-span-3">
-
                     <input
                         type="text"
                         name="keyword"
                         value="{{ request('keyword') }}"
                         placeholder="Cari kode, nama, kategori, merk..."
                         class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500">
-
                 </div>
 
                 <div class="flex gap-2">
 
                     <button
                         type="submit"
-                        class="bg-green-600 hover:bg-green-700 text-white px-5 rounded-lg">
-
+                        class="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-lg">
                         Cari
-
                     </button>
 
-                    <a href="{{ route('barang.index') }}"
-                       class="bg-gray-500 hover:bg-gray-600 text-white px-5 py-2 rounded-lg">
-
+                    <a href="{{ route('barang-masuk.index') }}"
+                        class="bg-gray-500 hover:bg-gray-600 text-white px-5 py-2 rounded-lg">
                         Reset
-
                     </a>
 
                 </div>
@@ -68,78 +53,104 @@
 
     </div>
 
+    <!-- Table -->
+    <div class="bg-white rounded-lg shadow-md overflow-x-auto">
 
- <div class="bg-white rounded-lg shadow-md overflow-hidden">
+        <table class="min-w-full">
 
-        <table class="w-full">
-<thead class="bg-blue-900 text-white ">
+            <thead class="bg-blue-900 text-white">
 
-<tr>
+                <tr class="text-center">
 
-<th class="border p-3">Tanggal</th>
-<th class="border p-3">Barang</th>
-<th class="border p-3">Jumlah</th>
-<th class="border p-3">Supplier</th>
-<th class="border p-3">Keterangan</th>
-<th class="border p-3">Aksi</th>
+                    <th class="border p-3">No</th>
+                    <th class="border p-3">Tanggal Masuk</th>
+                    <th class="border p-3">Kode Barang</th>
+                    <th class="border p-3">Nama Barang</th>
+                    <th class="border p-3">Kategori</th>
+                    <th class="border p-3">Merk</th>
+                    <th class="border p-3">Foto</th>
+                    <th class="border p-3">Lokasi</th>
 
-</tr>
+                </tr>
 
-</thead>
+            </thead>
 
-<tbody>
+            <tbody>
 
-@foreach($barangMasuk as $bm)
+                @forelse($barangMasuk as $bm)
 
-<tr class="hover:bg-gray-50">
+                <tr class="hover:bg-gray-50 text-center">
 
-<td class="border p-3">{{ $bm->tanggal }}</td>
+                    <td class="border p-3">
+                        {{ $loop->iteration }}
+                    </td>
 
-<td class="border p-3">{{ $bm->barang->nama_barang }}</td>
+                    <td class="border p-3">
+                        {{ $bm->created_at->format('d-m-Y') }}
+                    </td>
 
-<td class="border p-3">{{ $bm->jumlah }}</td>
+                    <td class="border p-3">
+                        {{ $bm->kode_barang }}
+                    </td>
 
-<td class="border p-3">{{ $bm->supplier }}</td>
+                    <td class="border p-3">
+                        {{ $bm->nama_barang }}
+                    </td>
 
-<td class="border p-3">{{ $bm->keterangan }}</td>
+                    <td class="border p-3">
+                        {{ $bm->kategori }}
+                    </td>
 
-<td class="border p-3">
+                    <td class="border p-3">
+                        {{ $bm->merk }}
+                    </td>
 
-<a href="{{ route('barang-masuk.edit',$bm->id) }}"
-class="text-blue-600">
+                    <td class="border p-3">
 
-Edit
+                        @if($bm->foto)
 
-</a>
+                            <img src="{{ asset('storage/'.$bm->foto) }}"
+                                class="w-16 h-16 object-cover rounded mx-auto">
 
-|
+                        @else
 
-<form
-action="{{ route('barang-masuk.destroy',$bm->id) }}"
-method="POST"
-style="display:inline">
+                            <span class="text-gray-500">
+                                Tidak ada foto
+                            </span>
 
-@csrf
-@method('DELETE')
+                        @endif
 
-<button
-onclick="return confirm('Hapus data?')">
+                    </td>
 
-Hapus
+                    <td class="border p-3">
+                        {{ $bm->lokasi }}
+                    </td>
 
-</button>
+                </tr>
 
-</form>
+                @empty
 
-</td>
+                <tr>
 
-</tr>
+                    <td colspan="8" class="border p-6 text-center text-gray-500">
 
-@endforeach
+                        Belum ada data barang masuk.
 
-</tbody>
+                    </td>
 
-</table>
+                </tr>
+
+                @endforelse
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    <div class="mt-5">
+        {{ $barangMasuk->links() }}
+    </div>
 
 </div>
 

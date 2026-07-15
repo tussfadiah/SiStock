@@ -1,90 +1,125 @@
 <x-app-layout>
 
-<x-slot name="header">
-    <h2 class="text-xl font-bold">
-        Edit Barang
-    </h2>
-</x-slot>
 
 <div class="py-6">
 <div class="max-w-4xl mx-auto bg-white shadow rounded-lg p-6">
 
-<form action="{{ route('barang.update',$barang->id) }}" method="POST">
+@if ($errors->any())
+<div class="bg-red-100 border border-red-400 text-red-700 p-3 rounded mb-4">
+    <ul>
+        @foreach ($errors->all() as $error)
+            <li>• {{ $error }}</li>
+        @endforeach
+    </ul>
+</div>
+@endif
+
+<form action="{{ route('barang.update',$barang->id) }}"
+      method="POST"
+      enctype="multipart/form-data">
 
 @csrf
 @method('PUT')
 
 <div class="mb-4">
-<label>Kode Barang</label>
-<input type="text"
+<label class="block font-medium">Kode Barang</label>
+<input
+type="text"
 name="kode_barang"
-value="{{ $barang->kode_barang }}"
-class="w-full border rounded p-2">
+value="{{ old('kode_barang',$barang->kode_barang) }}"
+class="w-full border rounded-lg p-2">
 </div>
 
 <div class="mb-4">
-<label>Nama Barang</label>
-<input type="text"
+<label class="block font-medium">Nama Barang</label>
+<input
+type="text"
 name="nama_barang"
-value="{{ $barang->nama_barang }}"
-class="w-full border rounded p-2">
+value="{{ old('nama_barang',$barang->nama_barang) }}"
+class="w-full border rounded-lg p-2">
 </div>
 
 <div class="mb-4">
-<label>Kategori</label>
-<input type="text"
+<label class="block font-medium">Aksi</label>
+<input
+type="text"
 name="kategori"
-value="{{ $barang->kategori }}"
-class="w-full border rounded p-2">
+value="{{ old('kategori',$barang->kategori) }}"
+class="w-full border rounded-lg p-2">
 </div>
 
 <div class="mb-4">
-<label>Merk</label>
-<input type="text"
+<label class="block font-medium">Merk</label>
+<input
+type="text"
 name="merk"
-value="{{ $barang->merk }}"
-class="w-full border rounded p-2">
+value="{{ old('merk',$barang->merk) }}"
+class="w-full border rounded-lg p-2">
 </div>
 
-<div class="mb-4">
-<label>Stok</label>
-<input type="number"
-name="stok"
-value="{{ $barang->stok }}"
-class="w-full border rounded p-2">
-</div>
 
 <div class="mb-4">
-<label>Satuan</label>
-<input type="text"
-name="satuan"
-value="{{ $barang->satuan }}"
-class="w-full border rounded p-2">
-</div>
-
-<div class="mb-4">
-<label>Lokasi</label>
-<input type="text"
+<label class="block font-medium">Lokasi</label>
+<input
+type="text"
 name="lokasi"
-value="{{ $barang->lokasi }}"
-class="w-full border rounded p-2">
+value="{{ old('lokasi',$barang->lokasi) }}"
+class="w-full border rounded-lg p-2">
 </div>
 
 <div class="mb-4">
-<label>Keterangan</label>
+<label class="block font-medium">Keterangan</label>
 <textarea
 name="keterangan"
-class="w-full border rounded p-2">{{ $barang->keterangan }}</textarea>
+class="w-full border rounded-lg p-2">{{ old('keterangan',$barang->keterangan) }}</textarea>
 </div>
 
-<button class="bg-blue-600 text-white px-4 py-2 rounded">
+<div class="mb-4">
+<label class="block font-medium">Foto Barang</label>
+
+@if($barang->foto)
+    <img src="{{ asset('storage/'.$barang->foto) }}"
+         class="w-40 rounded-lg shadow mb-3">
+@endif
+
+<input
+type="file"
+name="foto"
+accept="image/*"
+class="w-full border rounded-lg p-2">
+
+<small class="text-gray-500">
+Kosongkan jika tidak ingin mengganti foto.
+</small>
+</div>
+
+<div class="mb-4">
+<label class="block font-medium">Barcode</label>
+
+<input
+type="text"
+value="{{ $barang->barcode }}"
+class="w-full border rounded-lg p-2 bg-gray-100"
+readonly>
+</div>
+
+<div class="flex gap-3">
+
+<button
+class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg">
+
 Update
+
 </button>
 
 <a href="{{ route('barang.index') }}"
-class="bg-gray-500 text-white px-4 py-2 rounded">
+class="bg-gray-500 hover:bg-gray-600 text-white px-5 py-2 rounded-lg">
+
 Kembali
+
 </a>
+
+</div>
 
 </form>
 
