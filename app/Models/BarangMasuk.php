@@ -12,7 +12,6 @@ protected $fillable=[
 'barang_id',
 'tanggal',
 'jumlah',
-'supplier',
 'keterangan'
 
 ];

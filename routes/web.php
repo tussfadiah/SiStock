@@ -26,6 +26,10 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
+
+Route::get('/barang/{barang}/barcode', [BarangController::class, 'barcode'])
+    ->name('barang.barcode');
+
 });
 
 require __DIR__.'/auth.php';

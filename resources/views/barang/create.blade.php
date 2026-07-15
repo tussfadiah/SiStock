@@ -1,6 +1,6 @@
 <x-app-layout>
 
-    <x-slot name="header">
+    <x-slot name="header"z>
         <h2 class="text-xl font-bold">
             Tambah Barang
         </h2>
@@ -18,8 +18,9 @@
                     </ul>
                 </div>
             @endif
-
-            <form action="{{ route('barang.store') }}" method="POST">
+<form action="{{ route('barang.store') }}"
+      method="POST"
+      enctype="multipart/form-data">
                 @csrf
 
                 <div class="mb-4">
@@ -45,22 +46,6 @@
                            class="w-full border rounded p-2"
                            value="{{ old('kategori') }}">
                 </div>
-
-                <div class="mb-4">
-                    <label class="block mb-1">Stok</label>
-                    <input type="number"
-                           name="stok"
-                           class="w-full border rounded p-2"
-                           value="{{ old('stok') }}">
-                </div>
-
-                <div class="mb-4">
-                    <label class="block mb-1">Satuan</label>
-                    <input type="text"
-                           name="satuan"
-                           class="w-full border rounded p-2"
-                           value="{{ old('satuan') }}">
-                </div>
                 <div class="mb-4">
     <label class="block font-medium">Merk</label>
     <input type="text"
@@ -68,6 +53,16 @@
            class="w-full border rounded-lg p-2"
            value="{{ old('merk') }}"
            required>
+</div>
+
+<div class="mb-4">
+    <label class="block font-medium">Foto Barang</label>
+
+    <input
+        type="file"
+        name="foto"
+        class="w-full border rounded-lg p-2"
+        accept="image/*">
 </div>
 
                 <div class="mb-4">
