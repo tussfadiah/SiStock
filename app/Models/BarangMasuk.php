@@ -6,20 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class BarangMasuk extends Model
 {
-
-protected $fillable=[
-
-'barang_id',
-'tanggal',
-'jumlah',
-'keterangan'
-
-];
-
-
-public function barang()
-{
-    return $this->belongsTo(Barang::class);
-}
-
+    protected $fillable = [
+        'kode_barang',
+        'nama_barang',
+        'kategori',
+        'merk',
+        'lokasi',
+        'tanggal',
+        'keterangan',
+    ];
 }

@@ -110,12 +110,12 @@
     </table>
 
     <div class="barcode">
-
-      <img
-src="data:image/png;base64,{{ DNS1D::getBarcodePNG($barang->kode_barang,'C128',4,120) }}"
-style="width:350px">
-
+<img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($barang->kode_barang, 'C128') }}">
     </div>
+
+    <button class="btn" onclick="history.back()">
+    Batal
+</button>
 
     <button class="btn" onclick="window.print()">
         Cetak Barcode

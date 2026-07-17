@@ -39,14 +39,95 @@ value="{{ old('nama_barang',$barang->nama_barang) }}"
 class="w-full border rounded-lg p-2">
 </div>
 
-<div class="mb-4">
-<label class="block font-medium">Aksi</label>
-<input
-type="text"
-name="kategori"
-value="{{ old('kategori',$barang->kategori) }}"
-class="w-full border rounded-lg p-2">
+              <div class="mb-4">
+    <label class="block mb-1 font-medium">Kategori</label>
+
+    <select
+        name="kategori"
+        class="w-full border rounded p-2 focus:ring-2 focus:ring-blue-500"
+        required>
+
+        <option value="">-- Pilih Kategori --</option>
+
+        <option value="Laptop" {{ old('kategori') == 'Laptop' ? 'selected' : '' }}>
+            Laptop
+        </option>
+
+        <option value="Komputer" {{ old('kategori') == 'Komputer' ? 'selected' : '' }}>
+            Komputer
+        </option>
+
+        <option value="Monitor" {{ old('kategori') == 'Monitor' ? 'selected' : '' }}>
+            Monitor
+        </option>
+
+        <option value="Printer" {{ old('kategori') == 'Printer' ? 'selected' : '' }}>
+            Printer
+        </option>
+
+        <option value="Scanner" {{ old('kategori') == 'Scanner' ? 'selected' : '' }}>
+            Scanner
+        </option>
+
+        <option value="Kamera" {{ old('kategori') == 'Kamera' ? 'selected' : '' }}>
+            Kamera
+        </option>
+
+        <option value="Lensa Kamera" {{ old('kategori') == 'Lensa Kamera' ? 'selected' : '' }}>
+            Lensa Kamera
+        </option>
+
+        <option value="Mikrofon" {{ old('kategori') == 'Mikrofon' ? 'selected' : '' }}>
+            Mikrofon
+        </option>
+
+        <option value="Speaker" {{ old('kategori') == 'Speaker' ? 'selected' : '' }}>
+            Speaker
+        </option>
+
+        <option value="Broadcast" {{ old('kategori') == 'Broadcast' ? 'selected' : '' }}>
+            Broadcast
+        </option>
+
+        <option value="Networking" {{ old('kategori') == 'Networking' ? 'selected' : '' }}>
+            Networking
+        </option>
+
+        <option value="Server" {{ old('kategori') == 'Server' ? 'selected' : '' }}>
+            Server
+        </option>
+
+        <option value="Storage" {{ old('kategori') == 'Storage' ? 'selected' : '' }}>
+            Storage
+        </option>
+
+        <option value="UPS" {{ old('kategori') == 'UPS' ? 'selected' : '' }}>
+            UPS
+        </option>
+
+        <option value="Proyektor" {{ old('kategori') == 'Proyektor' ? 'selected' : '' }}>
+            Proyektor
+        </option>
+
+        <option value="Smart TV" {{ old('kategori') == 'Smart TV' ? 'selected' : '' }}>
+            Smart TV
+        </option>
+
+        <option value="Lighting" {{ old('kategori') == 'Lighting' ? 'selected' : '' }}>
+            Lighting
+        </option>
+
+        <option value="Peralatan Pendukung" {{ old('kategori') == 'Peralatan Pendukung' ? 'selected' : '' }}>
+            Peralatan Pendukung
+        </option>
+
+        <option value="Lainnya" {{ old('kategori') == 'Lainnya' ? 'selected' : '' }}>
+            Lainnya
+        </option>
+
+    </select>
 </div>
+
 
 <div class="mb-4">
 <label class="block font-medium">Merk</label>

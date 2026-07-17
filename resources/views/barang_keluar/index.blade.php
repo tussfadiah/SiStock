@@ -72,7 +72,7 @@
                     <th class="border p-3">Tanggal</th>
                     <th class="border p-3">Kode Barang</th>
                     <th class="border p-3">Nama Barang</th>
-                    <th class="border p-3">Digunakan Oleh</th>
+                    <th class="border p-3">Koordinator</th>
                     <th class="border p-3">Keperluan</th>
                     <th class="border p-3">Aksi</th>
 
@@ -95,11 +95,11 @@
                     </td>
 
                     <td class="border p-3">
-                        {{ $bk->barang->kode_barang }}
+                        {{ $bk->kode_barang }}
                     </td>
 
                     <td class="border p-3">
-                        {{ $bk->barang->nama_barang }}
+                        {{ $bk->nama_barang }}
                     </td>
 
                     <td class="border p-3">
@@ -113,14 +113,6 @@
                     <td class="border p-3">
 
                         <div class="flex justify-center gap-2">
-
-                            <a href="{{ route('barang-keluar.edit',$bk->id) }}"
-                                class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-lg text-sm">
-
-                                <i class="fas fa-pen"></i>
-                                Edit
-
-                            </a>
 
                             <form
                                 action="{{ route('barang-keluar.destroy',$bk->id) }}"

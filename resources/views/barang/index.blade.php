@@ -120,14 +120,12 @@
 
                             <!-- Barcode -->
                             <td class="border p-3">
-
-                                {!! DNS1D::getBarcodeHTML($b->barcode, 'C128', 2, 50) !!}
-
-                                <div class="text-xs mt-2 font-semibold">
-                                    {{ $b->barcode }}
-                                </div>
-
-                            </td>
+   @if($b->kode_barang)
+    {!! DNS1D::getBarcodeHTML($b->kode_barang,'C128',2,50) !!}
+@else
+    -
+@endif
+</td>
 
                             <td class="border p-3">
                                 {{ $b->lokasi }}
@@ -139,7 +137,6 @@
                                 <div class="flex flex-col gap-2 items-center">
 
                                     <a href="{{ route('barang.barcode', $b->id) }}"
-                                        target="_blank"
                                         class="w-36 inline-flex justify-center items-center gap-2 rounded-lg bg-green-600 px-3 py-2 text-sm text-white hover:bg-green-700">
 
                                         <i class="fas fa-barcode"></i>
