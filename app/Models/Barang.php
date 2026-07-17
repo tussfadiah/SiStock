@@ -6,24 +6,24 @@ use Illuminate\Database\Eloquent\Model;
 
 class Barang extends Model
 {
-  protected $fillable = [
-    'barang_id',
-    'tanggal',
-    'keterangan',
-];
+    protected $fillable = [
+        'kode_barang',
+        'nama_barang',
+        'kategori',
+        'merk',
+        'foto',
+        'barcode',
+        'lokasi',
+        'keterangan',
+    ];
 
-     public function barangMasuks()
-{
-    return $this->hasMany(BarangMasuk::class);
-}
+    public function barangMasuks()
+    {
+        return $this->hasMany(BarangMasuk::class);
+    }
 
     public function barangKeluars()
     {
         return $this->hasMany(BarangKeluar::class);
     }
-
-    public function store(Request $request)
-{
-    dd($request->all());
-}
 }

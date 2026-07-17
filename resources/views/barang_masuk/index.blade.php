@@ -67,8 +67,6 @@
                     <th class="border p-3">Kode Barang</th>
                     <th class="border p-3">Nama Barang</th>
                     <th class="border p-3">Kategori</th>
-                    <th class="border p-3">Merk</th>
-                    <th class="border p-3">Foto</th>
                     <th class="border p-3">Lokasi</th>
 
                 </tr>
@@ -99,27 +97,6 @@
 
                     <td class="border p-3">
                         {{ $bm->kategori }}
-                    </td>
-
-                    <td class="border p-3">
-                        {{ $bm->merk }}
-                    </td>
-
-                    <td class="border p-3">
-
-                        @if($bm->foto)
-
-                            <img src="{{ asset('storage/'.$bm->foto) }}"
-                                class="w-16 h-16 object-cover rounded mx-auto">
-
-                        @else
-
-                            <span class="text-gray-500">
-                                Tidak ada foto
-                            </span>
-
-                        @endif
-
                     </td>
 
                     <td class="border p-3">

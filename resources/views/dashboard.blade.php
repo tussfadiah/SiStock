@@ -16,13 +16,13 @@
         </div>
 
         <div class="bg-[#3b6db5] text-white rounded-xl shadow-lg p-6">
-            <h3 class="text-sm opacity-80">Lokasi</h3>
-            <p class="text-4xl font-bold mt-2">{{ $totalLokasi }}</p>
+            <h3 class="text-sm opacity-80">Barang Masuk</h3>
+            <p class="text-4xl font-bold mt-2">{{ $totalBarangMasuk }}</p>
         </div>
 
         <div class="bg-[#5c8cd1] text-white rounded-xl shadow-lg p-6">
-            <h3 class="text-sm opacity-80">Merk</h3>
-            <p class="text-4xl font-bold mt-2">{{ $totalMerk }}</p>
+            <h3 class="text-sm opacity-80">Barang Keluar</h3>
+            <p class="text-4xl font-bold mt-2">{{ $totalBarangKeluar }}</p>
         </div>
 
     </div>

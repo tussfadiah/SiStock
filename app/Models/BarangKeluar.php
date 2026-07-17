@@ -6,16 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class BarangKeluar extends Model
 {
-    protected $fillable = [
-        'barang_id',
-        'tanggal',
-        'jumlah',
-        'digunakan_oleh',
-        'keperluan',
-    ];
-
-    public function barang()
-    {
-        return $this->belongsTo(Barang::class);
-    }
+  protected $fillable = [
+    'kode_barang',
+    'nama_barang',
+    'kategori',
+    'merk',
+    'lokasi',
+    'tanggal',
+    'digunakan_oleh',
+    'keperluan',
+];
 }
