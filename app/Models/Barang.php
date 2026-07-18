@@ -11,24 +11,19 @@ class Barang extends Model
         'nama_barang',
         'kategori',
         'merk',
-        'satuan',
-        'stok',
+        'foto',
+        'barcode',
         'lokasi',
-        'keterangan'
+        'keterangan',
     ];
 
-     public function barangMasuks()
-{
-    return $this->hasMany(BarangMasuk::class);
-}
+    public function barangMasuks()
+    {
+        return $this->hasMany(BarangMasuk::class);
+    }
 
     public function barangKeluars()
     {
         return $this->hasMany(BarangKeluar::class);
     }
-
-    public function store(Request $request)
-{
-    dd($request->all());
-}
 }

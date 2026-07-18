@@ -10,22 +10,31 @@ class DashboardController extends Controller
 {
     public function index()
     {
+        // Card Dashboard
         $totalBarang = Barang::count();
 
-        $totalMasuk = BarangMasuk::count();
+        $totalKategori = Barang::distinct('kategori')->count();
 
-        $totalKeluar = BarangKeluar::count();
+        $totalBarangMasuk = BarangMasuk::count();
 
-        $totalStok = Barang::sum('stok');
+        $totalBarangKeluar = BarangKeluar::count();
 
-        $stokMenipis = Barang::where('stok','<=',5)->get();
+        // Grafik kategori
+        $kategori = Barang::selectRaw('kategori, COUNT(*) as total')
+            ->groupBy('kategori')
+            ->orderBy('total', 'DESC')
+            ->get();
+
+        // Barang terbaru
+        $barangTerbaru = Barang::latest()->take(10)->get();
 
         return view('dashboard', compact(
             'totalBarang',
-            'totalMasuk',
-            'totalKeluar',
-            'totalStok',
-            'stokMenipis'
+            'totalKategori',
+            'totalBarangMasuk',
+            'totalBarangKeluar',
+            'kategori',
+            'barangTerbaru'
         ));
     }
 }
