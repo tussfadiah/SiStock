@@ -7,6 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage; // Ditambahkan untuk menghapus file foto lama
 use Illuminate\View\View;
 
 class ProfileController extends Controller
@@ -26,13 +27,30 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        $user = $request->user();
+        
+        // Mengisi data name dan email yang lolos validasi
+        $user->fill($request->validated());
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        if ($user->isDirty('email')) {
+            $user->email_verified_at = null;
         }
 
-        $request->user()->save();
+        // PROSES UPLOAD FOTO PROFIL BARU
+        if ($request->hasFile('avatar')) {
+            // 1. Hapus foto lama dari storage jika user sebelumnya sudah punya foto
+            if ($user->avatar) {
+                Storage::disk('public')->delete($user->avatar);
+            }
+
+            // 2. Simpan foto baru ke folder storage/app/public/avatars
+            $path = $request->file('avatar')->store('avatars', 'public');
+            
+            // 3. Masukkan nama/path file baru ke kolom database
+            $user->avatar = $path;
+        }
+
+        $user->save();
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
