@@ -28,6 +28,11 @@ return new class extends Migration
     $table->text('keperluan');
 
     $table->timestamps();
+    $table->foreign('kode_barang')
+      ->references('kode_barang')
+      ->on('barangs')
+      ->cascadeOnDelete()
+      ->cascadeOnUpdate();
 });}
 
     /**
