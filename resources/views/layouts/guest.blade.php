@@ -7,16 +7,18 @@
         <script src="https://cdn.tailwindcss.com"></script>
     </head>
     <body class="font-sans text-gray-900 antialiased bg-[#0B2F64]">
-        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0">
+        <div class="min-h-screen flex flex-col justify-center items-center py-6">
             
-<div class="w-full sm:max-w-md mt-6 px-6 py-8 bg-white shadow-md overflow-hidden sm:rounded-lg">
-    
-    <div class="flex flex-col items-center justify-center w-full mb-6">
-        <img src="{{ asset('logosistock.png') }}" class="h-20 w-auto" alt="Logo">
-    </div>
-    
-    {{ $slot }}
-</div>
+            <!-- Pastikan menggunakan w-[90%] atau w-11/12 agar tidak mentok ke pinggir layar HP -->
+            <div class="w-[90%] sm:max-w-md px-6 py-8 bg-white shadow-xl overflow-hidden rounded-2xl">
+                
+                <div class="flex flex-col items-center justify-center w-full mb-6">
+                    <img src="{{ asset('logosistock.png') }}" class="h-20 w-auto" alt="Logo">
+                </div>
+                
+                {{ $slot }}
+            </div>
+
         </div>
     </body>
 </html>

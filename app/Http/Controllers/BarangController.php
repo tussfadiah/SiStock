@@ -6,6 +6,8 @@ use App\Models\Barang;
 use App\Models\BarangMasuk;
 use App\Models\BarangKeluar;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class BarangController extends Controller
@@ -125,30 +127,39 @@ class BarangController extends Controller
             ->with('success', 'Barang berhasil diupdate.');
     }
 
-    public function destroy(Barang $barang)
-    {
-        // Simpan log barang keluar
+
+public function destroy(Barang $barang)
+{
+    try {
+
+        DB::beginTransaction();
+
         BarangKeluar::create([
             'kode_barang'    => $barang->kode_barang,
             'nama_barang'    => $barang->nama_barang,
             'kategori'       => $barang->kategori,
             'merk'           => $barang->merk,
             'lokasi'         => $barang->lokasi,
-            'tanggal'        => now(),
+            'tanggal'        => now()->toDateString(),
             'digunakan_oleh' => auth()->user()->name,
             'keperluan'      => 'Barang dihapus dari inventaris',
         ]);
 
-        // Hapus foto
-        if ($barang->foto && Storage::disk('public')->exists($barang->foto)) {
-            Storage::disk('public')->delete($barang->foto);
+        if ($barang->foto) {
+            \Storage::disk('public')->delete($barang->foto);
         }
 
-        // Hapus data barang
-        $barang->delete();
+        $barang->delete();        DB::commit();
 
-        return redirect()
-            ->route('barang.index')
+        return redirect()->route('barang.index')
             ->with('success', 'Barang berhasil dihapus.');
+
+    } catch (\Exception $e) {
+
+        DB::rollBack();
+
+        dd($e->getMessage());
     }
+}
+
 }

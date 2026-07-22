@@ -70,20 +70,18 @@
 
 
         <!-- Tombol Aksi Bersandingan -->
-        <div class="flex items-center gap-3 pt-4 border-t border-gray-100 justify-end">
-           
-            <button
-                type="button"
-                @click="editPassword = false"
-                class="px-5 py-2.5 border border-gray-300 rounded-xl text-gray-700 hover:bg-gray-100 text-sm font-medium transition font-sans order-last"
-            >
+       <div class="flex items-center gap-3 pt-4 border-t border-gray-100 justify-end">
+            <button type="button" @click="editProfile = false" class="px-5 py-2.5 border border-gray-300 rounded-xl text-gray-700 hover:bg-gray-100 text-sm font-medium transition">
                 Batal
             </button>
-
-
-            <x-primary-button class="px-5 py-2.5 bg-green-600 hover:bg-green-700 text-white rounded-xl text-sm font-medium transition font-sans">
-                Simpan Perubahan
+            <x-primary-button class="px-5 py-2.5 bg-green-600 hover:bg-green-700 text-white rounded-xl text-sm font-medium transition shadow-sm">
+                {{ __('Simpan Perubahan') }}
             </x-primary-button>
+        
+                   
+
+
+    
 
 
         </div>
