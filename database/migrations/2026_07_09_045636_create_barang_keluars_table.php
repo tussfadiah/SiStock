@@ -13,27 +13,24 @@ return new class extends Migration
     {
         Schema::create('barang_keluars', function (Blueprint $table) {
 
-    $table->id();
+            $table->id();
 
-    $table->string('kode_barang');
-    $table->string('nama_barang');
-    $table->string('kategori');
-    $table->string('merk');
-    $table->string('lokasi');
+            $table->string('kode_barang');
+            $table->string('nama_barang');
+            $table->string('kategori');
+            $table->string('merk');
+            $table->string('lokasi');
 
-    $table->date('tanggal');
+            $table->date('tanggal');
 
-    $table->string('digunakan_oleh');
+            $table->string('digunakan_oleh');
 
-    $table->text('keperluan');
+            $table->text('keperluan');
 
-    $table->timestamps();
-    $table->foreign('kode_barang')
-      ->references('kode_barang')
-      ->on('barangs')
-      ->cascadeOnDelete()
-      ->cascadeOnUpdate();
-});}
+            $table->timestamps();
+
+        });
+    }
 
     /**
      * Reverse the migrations.

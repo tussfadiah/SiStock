@@ -1,6 +1,5 @@
 <x-app-layout>
 
-<div class="p-4 sm:p-6 md:ml-64">
 
     @if(session('success'))
         <div class="mb-6 rounded-lg border border-green-400 bg-green-100 p-3 text-green-700">

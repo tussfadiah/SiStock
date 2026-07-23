@@ -135,7 +135,6 @@ class BarangController extends Controller
             'merk'           => $barang->merk,
             'lokasi'         => $barang->lokasi,
             'tanggal'        => now(),
-            'digunakan_oleh' => auth()->user()->name,
             'keperluan'      => 'Barang dihapus dari inventaris',
         ]);
 

@@ -9,17 +9,20 @@
         @endif
 
         <!-- Card Filter -->
-        <div class="bg-white rounded-lg shadow-md p-5 mb-6">
+        <div class="bg-white rounded-lg shadow-md p-4 sm:p-5 mb-6">
 
-            <div class="flex justify-between items-center mb-4">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4">
                 <h2 class="text-xl font-bold text-gray-700">
                     Data Barang
                 </h2>
 
-                <a href="{{ route('barang.create') }}"
-                    class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
-                    + Tambah Barang
-                </a>
+                {{-- Tombol Tambah Barang hanya muncul untuk role teknisi/admin --}}
+                @if(auth()->user()->role == 'teknisi')
+                    <a href="{{ route('barang.create') }}"
+                        class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm sm:text-base">
+                        + Tambah Barang
+                    </a>
+                @endif
             </div>
 
             <form method="GET" action="{{ route('barang.index') }}">
@@ -32,22 +35,20 @@
                             name="keyword"
                             value="{{ request('keyword') }}"
                             placeholder="Cari kode, nama, kategori, merk..."
-                            class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500">
+                            class="w-full border rounded-lg px-3 py-2 text-sm sm:text-base focus:ring-2 focus:ring-blue-500">
                     </div>
 
                     <div class="flex gap-2">
-
                         <button
                             type="submit"
-                            class="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-lg">
+                            class="flex-1 sm:flex-none bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-lg text-sm sm:text-base">
                             Cari
                         </button>
 
                         <a href="{{ route('barang.index') }}"
-                            class="bg-gray-500 hover:bg-gray-600 text-white px-5 py-2 rounded-lg">
+                            class="flex-1 sm:flex-none text-center bg-gray-500 hover:bg-gray-600 text-white px-5 py-2 rounded-lg text-sm sm:text-base">
                             Reset
                         </a>
-
                     </div>
 
                 </div>
@@ -72,7 +73,10 @@
                         <th class="border p-3">Foto</th>
                         <th class="border p-3">Barcode</th>
                         <th class="border p-3">Lokasi</th>
-                        <th class="border p-3">Aksi</th>
+                        
+                        @if(auth()->user()->role == 'teknisi')
+                            <th class="border p-3">Aksi</th>
+                        @endif
 
                     </tr>
 
@@ -119,61 +123,63 @@
                             </td>
 
                             <!-- Barcode -->
-                            <td class="border p-3">
-   @if($b->kode_barang)
-    {!! DNS1D::getBarcodeHTML($b->kode_barang,'C128',2,50) !!}
-@else
-    -
-@endif
-</td>
+                            <td class="border p-3 mx-auto h-20 w-20 rounded-lg  object-cover">
+                                @if($b->kode_barang)
+                                    {!! DNS1D::getBarcodeHTML($b->kode_barang,'C128',1.5,45) !!} 
+                                @else
+                                    -
+                                @endif
+                            </td>
 
                             <td class="border p-3">
                                 {{ $b->lokasi }}
                             </td>
 
                             <!-- Aksi -->
-                            <td class="border p-3">
+                            @if(auth()->user()->role == 'teknisi')
+                                <td class="border p-3">
 
-                                <div class="flex flex-col gap-2 items-center">
+                                    <div class="flex flex-col gap-2 items-center">
 
-                                    <a href="{{ route('barang.barcode', $b->id) }}"
-                                        class="w-36 inline-flex justify-center items-center gap-2 rounded-lg bg-green-600 px-3 py-2 text-sm text-white hover:bg-green-700">
+                                        <a href="{{ route('barang.barcode', $b->id) }}"
+                                            class="w-36 inline-flex justify-center items-center gap-2 rounded-lg bg-green-600 px-3 py-2 text-sm text-white hover:bg-green-700">
 
-                                        <i class="fas fa-barcode"></i>
-                                        Barcode
+                                            <i class="fas fa-barcode"></i>
+                                            Barcode
 
-                                    </a>
+                                        </a>
 
-                                    <a href="{{ route('barang.edit', $b->id) }}"
-                                        class="w-36 inline-flex justify-center items-center gap-2 rounded-lg bg-blue-600 px-3 py-2 text-sm text-white hover:bg-blue-700">
+                                        <a href="{{ route('barang.edit', $b->id) }}"
+                                            class="w-36 inline-flex justify-center items-center gap-2 rounded-lg bg-blue-600 px-3 py-2 text-sm text-white hover:bg-blue-700">
 
-                                        <i class="fas fa-pen"></i>
-                                        Edit
+                                            <i class="fas fa-pen"></i>
+                                            Edit
 
-                                    </a>
+                                        </a>
 
-                                    <form
-                                        action="{{ route('barang.destroy', $b->id) }}"
-                                        method="POST"
-                                        onsubmit="return confirm('Hapus data barang ini?')">
+                                        <form
+                                            action="{{ route('barang.destroy', $b->id) }}"
+                                            method="POST"
+                                            onsubmit="return confirm('Hapus data barang ini?')">
 
-                                        @csrf
-                                        @method('DELETE')
+                                            @csrf
+                                            @method('DELETE')
 
-                                        <button
-                                            type="submit"
-                                            class="w-36 inline-flex justify-center items-center gap-2 rounded-lg bg-red-600 px-3 py-2 text-sm text-white hover:bg-red-700">
+                                            <button
+                                                type="submit"
+                                                class="w-36 inline-flex justify-center items-center gap-2 rounded-lg bg-red-600 px-3 py-2 text-sm text-white hover:bg-red-700">
 
-                                            <i class="fas fa-trash"></i>
-                                            Hapus
+                                                <i class="fas fa-trash"></i>
+                                                Hapus
 
-                                        </button>
+                                            </button>
 
-                                    </form>
+                                        </form>
 
-                                </div>
+                                    </div>
 
-                            </td>
+                                </td>
+                            @endif
 
                         </tr>
 
@@ -181,7 +187,7 @@
 
                         <tr>
 
-                            <td colspan="8" class="border p-6 text-center text-gray-500">
+                            <td colspan="{{ auth()->user()->role == 'teknisi' ? '8' : '7' }}" class="border p-6 text-center text-gray-500">
                                 Data barang tidak ditemukan.
                             </td>
 

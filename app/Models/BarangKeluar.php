@@ -13,7 +13,6 @@ class BarangKeluar extends Model
     'merk',
     'lokasi',
     'tanggal',
-    'digunakan_oleh',
     'keperluan',
 ];
 }
