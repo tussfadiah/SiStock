@@ -3,6 +3,12 @@
 
     <h2 class="text-xl font-bold text-[#0B2F64] mb-6 text-center">Login ke Akun Anda</h2>
 
+    @if(session('success'))
+    <div class="mb-4 rounded-lg border border-green-300 bg-green-100 p-3 text-green-700">
+        {{ session('success') }}
+    </div>
+@endif
+
     <form method="POST" action="{{ route('login') }}">
         @csrf
 

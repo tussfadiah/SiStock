@@ -1,6 +1,5 @@
 <x-app-layout>
-    <div class="py-6 sm:py-10 md:ml-64">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="lg:px-8">
 
             <div x-data="{
                     editProfile: {{ $errors->updateProfileInformation->isNotEmpty() ? 'true' : 'false' }},
@@ -141,9 +140,7 @@
                 <div x-show="editProfile" x-transition class="bg-white rounded-2xl shadow border border-gray-200 p-5 sm:p-8">
                     <div class="flex justify-between items-center border-b border-gray-100 pb-4 mb-6">
                         <h3 class="text-lg sm:text-xl font-bold text-[#0B2F64]">Perbarui Informasi Profil</h3>
-                        <button type="button" @click="editProfile = false" class="text-sm font-medium text-gray-500 hover:text-gray-700">
-                            &larr; Batal / Kembali
-                        </button>
+                        
                     </div>
                     @include('profile.partials.update-profile-information-form')
                 </div>
@@ -179,9 +176,7 @@
                 <div x-show="editPassword" x-transition class="bg-white rounded-2xl shadow border border-gray-200 p-5 sm:p-8">
                     <div class="flex justify-between items-center border-b border-gray-100 pb-4 mb-6">
                         <h3 class="text-lg sm:text-xl font-bold text-[#0B2F64]">Ubah Kata Sandi</h3>
-                        <button type="button" @click="editPassword = false" class="text-sm font-medium text-gray-500 hover:text-gray-700">
-                            &larr; Batal
-                        </button>
+                        
                     </div>
                     @include('profile.partials.update-password-form')
                 </div>

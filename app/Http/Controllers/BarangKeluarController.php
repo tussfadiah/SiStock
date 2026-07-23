@@ -16,8 +16,7 @@ class BarangKeluarController extends Controller
             $query->where('kode_barang', 'like', "%{$keyword}%")
                   ->orWhere('nama_barang', 'like', "%{$keyword}%")
                   ->orWhere('kategori', 'like', "%{$keyword}%")
-                  ->orWhere('merk', 'like', "%{$keyword}%")
-                  ->orWhere('digunakan_oleh', 'like', "%{$keyword}%");
+                  ->orWhere('merk', 'like', "%{$keyword}%");
 
         })
         ->latest()
